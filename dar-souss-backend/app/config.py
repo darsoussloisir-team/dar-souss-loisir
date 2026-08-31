@@ -19,7 +19,9 @@ class Settings(BaseSettings):
     GROQ_API_KEY: str = ""
 
     # Database
-    DATABASE_URL: str = "sqlite+aiosqlite:///./dar_souss.db"
+     # Database (Turso)
+    DATABASE_URL: str = ""
+    DATABASE_AUTH_TOKEN: str = ""
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
