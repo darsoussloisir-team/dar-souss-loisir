@@ -37,9 +37,23 @@ export default function BookingModal({ pkg, onClose }) {
       setWhatsappUrl(res.whatsapp_url)
       setStep('success')
     } catch (err) {
-      const msg = err?.response?.data?.detail
-      setServerError(typeof msg === 'string' ? msg : 'Something went wrong. Please try again.')
-    }
+  const detail = err?.response?.data?.detail
+
+  if (Array.isArray(detail)) {
+    const messages = detail.map(error => {
+      const field = error.loc?.[error.loc.length - 1] || 'field'
+      return `${field}: ${error.msg}`
+    })
+
+    setServerError(messages.join(' | '))
+  } else {
+    setServerError(
+      typeof detail === 'string'
+        ? detail
+        : 'Something went wrong. Please try again.'
+    )
+  }
+}
   }
 
   return (

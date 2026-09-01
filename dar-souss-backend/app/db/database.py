@@ -81,8 +81,8 @@ class Connection:
 
 def _connect():
     return libsql.connect(
-        database=settings.TURSO_DATABASE_URL,
-        auth_token=settings.TURSO_AUTH_TOKEN,
+        database=settings.DATABASE_URL,
+        auth_token=settings.DATABASE_AUTH_TOKEN,
     )
 
 
@@ -135,4 +135,4 @@ async def init_db() -> None:
 
     await conn.commit()
     await conn.close()
-    print("Turso database initialised at", settings.TURSO_DATABASE_URL)
+    print("Turso database initialised at", settings.DATABASE_URL)
