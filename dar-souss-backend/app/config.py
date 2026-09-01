@@ -22,6 +22,7 @@ class Settings(BaseSettings):
      # Database (Turso)
     DATABASE_URL: str = ""
     DATABASE_AUTH_TOKEN: str = ""
+    ADMIN_API_KEY: str
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 

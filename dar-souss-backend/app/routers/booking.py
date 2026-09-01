@@ -7,7 +7,17 @@ POST /api/booking
 - Sends email
 - Returns confirmation + pre-filled WhatsApp URL
 """
+from app.config import get_settings
+from fastapi import (
+    APIRouter,
+    Body,
+    Depends,
+    HTTPException,
+    Security,
+    status,
+)
 
+from fastapi.security.api_key import APIKeyHeader
 import logging
 from datetime import datetime, timezone
 from urllib.parse import quote
@@ -18,13 +28,17 @@ from fastapi import APIRouter, Body, Depends, HTTPException, status
 from app.db.database import get_db, Connection
 from app.models.schemas import BookingRequest, BookingResponse, PACKAGE_LABELS
 from app.services.email_service import send_booking_email
-
+settings = get_settings()
 
 logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
 WHATSAPP_NUMBER = "212615726781"
+api_key_header = APIKeyHeader(
+    name="X-API-Key",
+    auto_error=True,
+)
 
 
 def build_booking_whatsapp_url(data: dict) -> str:
@@ -157,9 +171,16 @@ async def submit_booking(
 @router.get("/list")
 async def list_bookings(
     db: aiosqlite.Connection = Depends(get_db),
+    api_key: str = Security(api_key_header),
     limit: int = 50,
     offset: int = 0,
 ):
+    if api_key != settings.ADMIN_API_KEY:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Invalid API key",
+        )
+
     async with db.execute(
         "SELECT * FROM bookings ORDER BY created_at DESC LIMIT ? OFFSET ?",
         (limit, offset),
