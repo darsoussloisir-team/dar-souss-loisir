@@ -62,7 +62,7 @@ export default function ChatWidget() {
     setError('')
 
     try {
-      const res = await fetch('/api/agent/chat', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/agent/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: next, session_id: SESSION_ID }),
