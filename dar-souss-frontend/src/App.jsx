@@ -10,7 +10,7 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Gallery from './pages/Gallery'
 import ExperiencesIndex from './pages/ExperiencesIndex'
-import ExperienceDetail from './pages/experiences/ExperienceDetail'
+import ExperienceDetail from './pages/Experiences/ExperienceDetail'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
