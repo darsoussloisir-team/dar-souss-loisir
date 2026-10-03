@@ -1,4 +1,8 @@
 import { useState } from 'react'
+
+
+const FOUNDING_YEAR = 2005
+const YEARS_OF_EXPERIENCE = new Date().getFullYear() - FOUNDING_YEAR
 import { Link } from 'react-router-dom'
 import { ChevronDown, Star, ExternalLink } from 'lucide-react'
 import { PACKAGES, REVIEWS, REVIEW_LINKS } from '../data/content'
@@ -68,7 +72,7 @@ function Hero({ onBook }) {
           <a href="https://wa.me/212615726781?text=Hello%2C%20I%20would%20like%20to%20book%20a%20camel%20ride." target="_blank" rel="noreferrer" className="btn-outline-light">Book via WhatsApp</a>
         </div>
         <div className="hero__stats">
-          {[['17', 'Years of Experience'], ['1', 'Camel per Guest'], ['15', 'Max Guests per Tour']].map(([n, l], i) => (
+          {[[YEARS_OF_EXPERIENCE, 'Years of Experience'], ['1', 'Camel per Guest'], ['15', 'Max Guests per Tour']].map(([n, l], i) => (
             <div key={i} className="hero__stat-wrap">
               {i > 0 && <div className="hero__stat-div" />}
               <div className="hero__stat"><span className="hero__stat-n">{n}</span><span className="hero__stat-l">{l}</span></div>
@@ -88,7 +92,7 @@ function TrustStrip() {
   return (
     <div id="trust" className="trust fade-up" ref={ref}>
       <div className="container trust__inner">
-        {['One tourist per camel — no exceptions', 'Hotel pickup included from Agadir', 'No shopping stops or hidden agendas', 'Family-run for 17 years'].map(t => (
+        {['One tourist per camel — no exceptions', 'Hotel pickup included from Agadir', 'No shopping stops or hidden agendas', `Family-run for ${YEARS_OF_EXPERIENCE} years`].map(t => (
           <div key={t} className="trust__item">
             <span className="trust__dot" />{t}
           </div>
@@ -157,7 +161,7 @@ function StoryStrip() {
       <div className="story-strip__text fade-up" ref={ref}>
         <span className="section-label" style={{ color: 'var(--green-gold)' }}>Our Promise</span>
         <div className="divider-line" />
-        <h2 style={{ color: 'var(--sand-50)' }}>Seventeen years of<br /><em style={{ color: 'var(--terra-400)' }}>one singular craft</em></h2>
+        <h2 style={{ color: 'var(--sand-50)' }}>{YEARS_OF_EXPERIENCE} years of<br /><em style={{ color: 'var(--terra-400)' }}>one singular craft</em></h2>
         <p style={{ color: 'var(--sand-300)', marginBottom: '2rem' }}>
           We do nothing but camel rides. We have been doing this since 2005, we know this land, 
           these animals, and what genuine hospitality looks like. One tourist per camel. 
